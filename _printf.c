@@ -7,9 +7,8 @@
  */
 int _printf(const char *format, ...)
 {
+	int projt = 0;
 	va_list mala;
-	int c, projt = 0;
-	const char *s;
 
 	va_start(mala, format);
 
@@ -20,26 +19,28 @@ int _printf(const char *format, ...)
 			format++;
 			if (*format == 'c')
 			{
-				c = va_arg(mala, int);
-				printf("%c", c);
+				int c = va_arg(mala, int);
+
+				projt += printf("%c", c);
 			}
-			if (*format == 's')
+			else if (*format == 's')
 			{
-				s = va_arg(mala, const char*);
-				printf("%s", s);
+				const char *s = va_arg(mala, const char *);
+
+				projt += printf("%s", s);
 			}
 			else if (*format == '%')
 			{
-				printf("%%");
+				projt += printf("%%");
 			}
 		}
 		else
 		{
-			printf("%c", *format);
+			putchar(*format);
+			projt++;
 		}
 		format++;
 	}
 	va_end(mala);
-
 	return (projt);
 }
