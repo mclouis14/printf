@@ -1,34 +1,49 @@
 #include "main.h"
-#include <stdio.h>
+
 /**
- * _printf - The function produces output according to a format
- * @format: pointer that iterates through strings
- * Return: number of characters printed
+ * _printf - Function to print formatted output.
+ * @format: Handles the format specifiers 'c', 's', and '%'.
+ * Return: number of chararcters printed
  */
 int _printf(const char *format, ...)
 {
-	va_list collab;
-	int printed_chars = 0;
-	const char c, *str;
+	va_list mala;
+	int projt = 0;
+	const char *s;
 
-	va_start(collab, format);
+	va_start(mala, format);
 
-	while (*format)
+	while (*format != '\0')
+	{
 		if (*format == '%')
 		{
 			format++;
 			if (*format == 'c')
-				c = va_arg(collab, int);
-				printed_chars += write(1, &c, 1);
-			else if (*format == 's')
-				for (str = va_arg(collab, const char *); *str; str++)
-					printed_chars += write(1, str, 1);
+			{
+				putchar(va_arg(mala, int));
+			}
+			if (*format == 's')
+			{
+				s = va_arg(mala, const char*);
+				while (*s)
+				{
+					putchar(*s);
+					s++;
+				}
+			}
 			else if (*format == '%')
-				printed_chars += write(1, "%", 1);
+			{
+				putchar('%');
+				projt++;
+			}
 		}
 		else
-			printed_chars += write(1, format, 1);
-
-	va_end(collab);
-	return (printed_chars);
+		{
+			putchar(*format);
+			projt++;
+		}
+		format++;
+	}
+	va_end(mala);
+	return (projt);
 }
